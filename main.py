@@ -3,6 +3,7 @@ import graph
 import sorting
 import random
 import time
+import matplotlib
 import matplotlib.pyplot as plt
 
 print('Sorting Visualization')
@@ -29,14 +30,15 @@ end = time.time()
 
 #show final graph
 #TODO: Change color after plotting
-'''
 ax = plt.gca()
-for bar in ax.get_children():
-    if(type(bar) == plt.patches.Rectangle):
-        print('here')
-        bar.set_color(5)
-'''
+children = ax.get_children()
+bars = list(filter(lambda x : isinstance(x, matplotlib.patches.Rectangle), children))
+#print(bars)
+for bar in bars[0:len(bars)-1]:
+    print(bar)
+    bar.set_color('g')
+
 print('Swaps: ', swaps)
 print('Time: ', end-start)
 plt.show()
-plt.pause(5)
+plt.pause(3)
