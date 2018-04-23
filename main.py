@@ -6,9 +6,10 @@ import time
 import matplotlib.pyplot as plt
 
 print('Sorting Visualization')
-print('Choose Algorithm:\n1. Bubble\n2. B\n3. C')
+print('Choose Algorithm:\n1. Bubble\n2. Quick\n3. C')
 functdict =  {
     '1': sorting.bubble,
+    '2': sorting.quick,
 }
 
 choice = input('Enter selection: ')
