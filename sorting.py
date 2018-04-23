@@ -52,15 +52,32 @@ def quick(nums, sz, graph, plt):
 
     def _quicksort(nums, begin, end, swaps):
         if begin >= end:
-            return 0
+            return 0 
         val = partition(nums, begin, end, swaps)
         pvt = val[0]
         swaps = val[1]
+        print('above ', swaps)
         graph.updateGraph(plt, nums, sz)
         plt.pause(0.001)
-        swaps += _quicksort(nums, begin, pvt-1, swaps)
-        swaps += _quicksort(nums, pvt+1, end, swaps)
-        return swaps
+        _quicksort(nums, begin, pvt-1, swaps)
+        print('first ', swaps)
+        _quicksort(nums, pvt+1, end, swaps)
+        print('second ', swaps)
 
     swaps = _quicksort(nums, begin, end, swaps)
+    return swaps
+
+def insertion(nums, sz, graph, plt):
+    swaps = 0
+    print('in insertion')
+    for i in range(1, sz):
+        val = nums[i]
+        pos = i
+        while pos > 0 and nums[pos-1] > val:
+            nums[pos] = nums[pos-1]
+            pos -= 1
+            swaps += 1
+            graph.updateGraph(plt, nums, sz)
+            plt.pause(0.001)
+        nums[pos] = val
     return swaps

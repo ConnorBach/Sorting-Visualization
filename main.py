@@ -7,10 +7,11 @@ import matplotlib
 import matplotlib.pyplot as plt
 
 print('Sorting Visualization')
-print('Choose Algorithm:\n1. Bubble\n2. Quick\n3. C')
+print('Choose Algorithm:\n1. Bubble\n2. Quick\n3. Insertion')
 functdict =  {
     '1': sorting.bubble,
     '2': sorting.quick,
+    '3': sorting.insertion,
 }
 
 choice = input('Enter selection: ')
@@ -19,7 +20,7 @@ sz = int(input('Enter size of data: '))
 plt.ion()
 
 #initial graph 
-nums = random.sample(range(1,100), sz)
+nums = random.sample(range(1,sz+1), sz)
 graph.graphData(plt, nums, sz)
 plt.show()
 
@@ -28,16 +29,14 @@ start = time.time()
 swaps = functdict[choice](nums, sz, graph, plt)
 end = time.time()
 
-#show final graph
-#TODO: Change color after plotting
+#Change color after plotting
 ax = plt.gca()
 children = ax.get_children()
 bars = list(filter(lambda x : isinstance(x, matplotlib.patches.Rectangle), children))
-#print(bars)
 for bar in bars[0:len(bars)-1]:
-    print(bar)
     bar.set_color('g')
 
+#show final graph
 print('Swaps: ', swaps)
 print('Time: ', end-start)
 plt.show()
