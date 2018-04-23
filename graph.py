@@ -9,7 +9,7 @@ def graphData(plt, data):
     plt.draw()
 
 def updateGraph(plt, data):
-    print('updating graph')
+    #print('updating graph')
     plt.clf()
     x_rng = [x for x in range(1,11)]
     plt.bar(x_rng, data, align='center', alpha=0.5)
