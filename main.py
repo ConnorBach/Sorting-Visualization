@@ -2,6 +2,7 @@
 import graph
 import sorting
 import random
+import time
 import matplotlib.pyplot as plt
 
 print('Sorting Visualization')
@@ -21,7 +22,9 @@ graph.graphData(plt, nums, sz)
 plt.show()
 
 #call sorting function
-functdict[choice](nums, sz, graph, plt)
+start = time.time()
+swaps = functdict[choice](nums, sz, graph, plt)
+end = time.time()
 
 #show final graph
 #TODO: Change color after plotting
@@ -32,5 +35,7 @@ for bar in ax.get_children():
         print('here')
         bar.set_color(5)
 '''
+print('Swaps: ', swaps)
+print('Time: ', end-start)
 plt.show()
 plt.pause(5)
