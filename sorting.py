@@ -40,6 +40,11 @@ def partition(nums, begin, end, swaps):
     swaps += 1
     return [pvt, swaps]
 
+'''
+FUNCTION quick
+quick sort function
+@return number of swaps
+'''
 def quick(nums, sz, graph, plt):
     begin = 0
     end = (sz-1)
