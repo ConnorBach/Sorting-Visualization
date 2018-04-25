@@ -37,6 +37,7 @@ for bar in bars[0:len(bars)-1]:
     bar.set_color('g')
 
 #show final graph
+print('**************************\n')
 print('Swaps: ', swaps)
 print('Time: ', end-start)
 plt.show()

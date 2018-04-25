@@ -28,14 +28,14 @@ def bubble(nums, sz, graph, plt):
 FUNCTION partion
 Quick sort helper function
 '''
-def partition(nums, begin, end, swaps):
+def partition(nums, begin, end):
     pvt = begin
+    swaps = 0
     for i in range(begin+1 , end+1):
         if(nums[i] <= nums[begin]):
             pvt += 1
             nums[i], nums[pvt] = nums[pvt], nums[i]
             swaps += 1
-            print(swaps)
     nums[pvt], nums[begin] = nums[begin], nums[pvt]
     swaps += 1
     return [pvt, swaps]
@@ -52,17 +52,15 @@ def quick(nums, sz, graph, plt):
 
     def _quicksort(nums, begin, end, swaps):
         if begin >= end:
-            return 0 
-        val = partition(nums, begin, end, swaps)
+            return swaps 
+        val = partition(nums, begin, end)
         pvt = val[0]
         swaps = val[1]
-        print('above ', swaps)
         graph.updateGraph(plt, nums, sz)
         plt.pause(0.001)
-        _quicksort(nums, begin, pvt-1, swaps)
-        print('first ', swaps)
-        _quicksort(nums, pvt+1, end, swaps)
-        print('second ', swaps)
+        swaps += _quicksort(nums, begin, pvt-1, swaps)
+        swaps += _quicksort(nums, pvt+1, end, swaps)
+        return swaps
 
     swaps = _quicksort(nums, begin, end, swaps)
     return swaps
