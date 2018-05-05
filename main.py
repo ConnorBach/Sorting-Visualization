@@ -9,6 +9,7 @@ import sys
 
 CHOICE = 0
 SZ = 0
+GRAPHICS = False 
 
 def usage(status):
     print('Sorting Visualization')
@@ -40,7 +41,6 @@ if len(sys.argv) == 2:
 
 while i < len(sys.argv) - 1:
     arg = sys.argv[i]
-    print(arg)
     if arg == '-h':
         usage(0)
     elif arg == '-a':
@@ -49,6 +49,9 @@ while i < len(sys.argv) - 1:
     elif arg == '-n':
         i += 1
         SZ = int(sys.argv[i])
+    elif arg == '-g':
+        i += 1
+        GRAPHICS = sys.argv[i]
     else:
         usage(1)
     i += 1
@@ -56,28 +59,32 @@ while i < len(sys.argv) - 1:
 choice = CHOICE
 sz = SZ
 #set interactive
-plt.ion()
+if GRAPHICS:
+    plt.ion()
 
 #initial graph 
 nums = random.sample(range(1,sz+1), sz)
-graph.graphData(plt, nums, sz)
-plt.show()
+if GRAPHICS:
+    graph.graphData(plt, nums, sz)
+    plt.show()
 
 #call sorting function
 start = time.time()
-swaps = functdict[choice](nums, sz, graph, plt)
+swaps = functdict[choice](nums, sz, graph, plt, GRAPHICS)
 end = time.time()
 
 #Change color after plotting
-ax = plt.gca()
-children = ax.get_children()
-bars = list(filter(lambda x : isinstance(x, matplotlib.patches.Rectangle), children))
-for bar in bars[0:len(bars)-1]:
-    bar.set_color('g')
+if GRAPHICS:
+    ax = plt.gca()
+    children = ax.get_children()
+    bars = list(filter(lambda x : isinstance(x, matplotlib.patches.Rectangle), children))
+    for bar in bars[0:len(bars)-1]:
+        bar.set_color('g')
 
 #show final graph
-print('**************************\n')
 print('Swaps: ', swaps)
 print('Time: ', end-start)
-plt.show()
-plt.pause(3)
+
+if GRAPHICS:
+    plt.show()
+    plt.pause(3)

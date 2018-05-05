@@ -8,7 +8,7 @@ FUNCTION bubble
 @param plt - matplotlib plt
 @return number of swaps
 '''
-def bubble(nums, sz, graph, plt):
+def bubble(nums, sz, graph, plt, GRAPHICS):
     swaps = 0
     for i in range(len(nums)-1, 0, -1):
         for j in range(i):
@@ -19,8 +19,9 @@ def bubble(nums, sz, graph, plt):
                 nums[j+1] = tmp
                 swaps += 1
             #update graph
-            graph.updateGraph(plt, nums, sz)
-            plt.pause(0.001)
+            if GRAPHICS:
+                graph.updateGraph(plt, nums, sz)
+                plt.pause(0.001)
     return swaps
 #TODO: Add more sorting algorithms
 
@@ -45,27 +46,28 @@ FUNCTION quick
 quick sort function
 @return number of swaps
 '''
-def quick(nums, sz, graph, plt):
+def quick(nums, sz, graph, plt, GRAPHICS):
     begin = 0
     end = (sz-1)
     swaps = 0
 
-    def _quicksort(nums, begin, end, swaps):
+    def _quicksort(nums, begin, end, swaps, GRAPHICS):
         if begin >= end:
             return swaps 
         val = partition(nums, begin, end)
         pvt = val[0]
         swaps = val[1]
-        graph.updateGraph(plt, nums, sz)
-        plt.pause(0.001)
-        swaps += _quicksort(nums, begin, pvt-1, swaps)
-        swaps += _quicksort(nums, pvt+1, end, swaps)
+        if GRAPHICS:
+            graph.updateGraph(plt, nums, sz)
+            plt.pause(0.001)
+        swaps += _quicksort(nums, begin, pvt-1, swaps, GRAPHICS)
+        swaps += _quicksort(nums, pvt+1, end, swaps, GRAPHICS)
         return swaps
 
-    swaps = _quicksort(nums, begin, end, swaps)
+    swaps = _quicksort(nums, begin, end, swaps, GRAPHICS)
     return swaps
 
-def insertion(nums, sz, graph, plt):
+def insertion(nums, sz, graph, plt, GRAPHICS):
     swaps = 0
     print('in insertion')
     for i in range(1, sz):
@@ -75,12 +77,13 @@ def insertion(nums, sz, graph, plt):
             nums[pos] = nums[pos-1]
             pos -= 1
             swaps += 1
-            graph.updateGraph(plt, nums, sz)
-            plt.pause(0.001)
+            if GRAPHICS:
+                graph.updateGraph(plt, nums, sz)
+                plt.pause(0.001)
         nums[pos] = val
     return swaps
 
-def selection(nums, sz, graph, plt):
+def selection(nums, sz, graph, plt, GRAPHICS):
     swaps = 0
     for i in range(sz):
         minElementIndex = i
@@ -92,11 +95,12 @@ def selection(nums, sz, graph, plt):
             nums[i] = nums[minElementIndex]
             nums[minElementIndex] = tmp
             swaps += 1
-            graph.updateGraph(plt, nums, sz)
-            plt.pause(0.001)
+            if GRAPHICS:
+                graph.updateGraph(plt, nums, sz)
+                plt.pause(0.001)
     return swaps
 
-def shell(nums, sz, graph, plt):
+def shell(nums, sz, graph, plt, GRAPHICS):
     swaps = 0
     # generate gaps of N/2^k
     gaps = [int(sz/ pow(2,k)) for k in range(sz)]
@@ -108,15 +112,17 @@ def shell(nums, sz, graph, plt):
             while j >= gap and nums[j-gap] > temp:
                 nums[j] = nums[j-gap]
                 swaps += 1
-                graph.updateGraph(plt, nums, sz)
-                plt.pause(0.001)
+                if GRAPHICS:
+                    graph.updateGraph(plt, nums, sz)
+                    plt.pause(0.001)
                 j -= gap
             nums[j] = temp
             swaps += 1
     return swaps
 
-def default_sort(nums, sz, graph, plt):   
+def default_sort(nums, sz, graph, plt, GRAPHICS):   
     for i, e in enumerate(sorted(nums)):
         nums[i] = e 
-        graph.updateGraph(plt, nums, sz)
-        plt.pause(0.001)
+        if GRAPHICS:
+            graph.updateGraph(plt, nums, sz)
+            plt.pause(0.001)
