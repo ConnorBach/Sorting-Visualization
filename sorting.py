@@ -95,3 +95,22 @@ def selection(nums, sz, graph, plt):
             graph.updateGraph(plt, nums, sz)
             plt.pause(0.001)
     return swaps
+
+def shell(nums, sz, graph, plt):
+    swaps = 0
+    # generate gaps of N/2^k
+    gaps = [int(sz/ pow(2,k)) for k in range(sz)]
+    for gap in gaps:
+        for i in range(gap, sz):
+            temp = nums[i]
+
+            j = i
+            while j >= gap and nums[j-gap] > temp:
+                nums[j] = nums[j-gap]
+                swaps += 1
+                graph.updateGraph(plt, nums, sz)
+                plt.pause(0.001)
+                j -= gap
+            nums[j] = temp
+            swaps += 1
+    return swaps
