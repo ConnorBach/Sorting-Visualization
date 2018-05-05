@@ -114,3 +114,9 @@ def shell(nums, sz, graph, plt):
             nums[j] = temp
             swaps += 1
     return swaps
+
+def default_sort(nums, sz, graph, plt):   
+    for i, e in enumerate(sorted(nums)):
+        nums[i] = e 
+        graph.updateGraph(plt, nums, sz)
+        plt.pause(0.001)
