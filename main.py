@@ -5,16 +5,24 @@ import random
 import time
 import matplotlib
 import matplotlib.pyplot as plt
+import sys
 
-print('Sorting Visualization')
-print('''Choose Algorithm:
-        1. Bubble
-        2. Quick
-        3. Insertion
-        4. Selection
-        5. Shell
-        6. Default 
-        ''')
+CHOICE = 0
+SZ = 0
+
+def usage(status):
+    print('Sorting Visualization')
+    print('USAGE: main.py -a [ALGORITHM] -n [SIZE OF DATA]')
+    print('''Algorithms:
+            1. Bubble
+            2. Quick
+            3. Insertion
+            4. Selection
+            5. Shell
+            6. Default 
+            ''')
+    sys.exit(status)
+
 functdict =  {
     '1': sorting.bubble,
     '2': sorting.quick,
@@ -24,8 +32,29 @@ functdict =  {
     '6': sorting.default_sort
 }
 
-choice = input('Enter selection: ')
-sz = int(input('Enter size of data: '))
+# Parse command line arguments
+i = 1
+if len(sys.argv) == 2:
+    if sys.argv[1] == '-h':
+        usage(0)
+
+while i < len(sys.argv) - 1:
+    arg = sys.argv[i]
+    print(arg)
+    if arg == '-h':
+        usage(0)
+    elif arg == '-a':
+        i += 1
+        CHOICE = sys.argv[i]
+    elif arg == '-n':
+        i += 1
+        SZ = int(sys.argv[i])
+    else:
+        usage(1)
+    i += 1
+
+choice = CHOICE
+sz = SZ
 #set interactive
 plt.ion()
 
