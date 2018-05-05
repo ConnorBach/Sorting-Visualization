@@ -7,11 +7,12 @@ import matplotlib
 import matplotlib.pyplot as plt
 
 print('Sorting Visualization')
-print('Choose Algorithm:\n1. Bubble\n2. Quick\n3. Insertion')
+print('Choose Algorithm:\n1. Bubble\n2. Quick\n3. Insertion\n4. Selection')
 functdict =  {
     '1': sorting.bubble,
     '2': sorting.quick,
     '3': sorting.insertion,
+    '4': sorting.selection
 }
 
 choice = input('Enter selection: ')

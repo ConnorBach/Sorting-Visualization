@@ -79,3 +79,19 @@ def insertion(nums, sz, graph, plt):
             plt.pause(0.001)
         nums[pos] = val
     return swaps
+
+def selection(nums, sz, graph, plt):
+    swaps = 0
+    for i in range(sz):
+        minElementIndex = i
+        for j in range(i+1, sz):
+            if(nums[j] < nums[minElementIndex]):
+                minElementIndex = j
+        if(minElementIndex != i):
+            tmp = nums[i]
+            nums[i] = nums[minElementIndex]
+            nums[minElementIndex] = tmp
+            swaps += 1
+            graph.updateGraph(plt, nums, sz)
+            plt.pause(0.001)
+    return swaps
