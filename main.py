@@ -7,7 +7,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import sys
 
-CHOICE = 0
+CHOICE = '1'
 SZ = 0
 GRAPHICS = False 
 
@@ -83,7 +83,7 @@ if GRAPHICS:
 
 #show final graph
 print('Swaps: ', swaps)
-print('Time: ', end-start)
+print('Time: ', end-start, end='')
 
 if GRAPHICS:
     plt.show()

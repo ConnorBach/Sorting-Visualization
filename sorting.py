@@ -69,7 +69,6 @@ def quick(nums, sz, graph, plt, GRAPHICS):
 
 def insertion(nums, sz, graph, plt, GRAPHICS):
     swaps = 0
-    print('in insertion')
     for i in range(1, sz):
         val = nums[i]
         pos = i
