@@ -82,9 +82,9 @@ end = time.time()
 
 f = open('check.txt', 'a')
 if(nums != checkNums):
-    f.write('Failed')
+    f.write('Failed\n')
 else:
-    f.write('Correct')
+    f.write('Correct\n')
 f.close()
 
 #Change color after plotting

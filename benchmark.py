@@ -1,3 +1,4 @@
+#!/usr/local/bin/python3
 # benchmarking utility for sorting-visualzation
 import sys
 import main
