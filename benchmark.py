@@ -5,7 +5,7 @@ import subprocess
 from subprocess import PIPE
 
 algs = ['1', '2', '3', '4', '5', '6']
-sizes = [100, 1000, 10000, 100000]
+sizes = [10, 100, 1000, 10000]
 times = []
 swaps = []
 
