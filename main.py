@@ -1,4 +1,4 @@
-#!/usr/bin/local/python3
+#!/usr/local/bin/python3
 import graph
 import sorting
 import random
@@ -13,7 +13,7 @@ GRAPHICS = False
 
 def usage(status):
     print('Sorting Visualization')
-    print('USAGE: main.py -a [ALGORITHM] -n [SIZE OF DATA]')
+    print('USAGE: main.py -a [ALGORITHM] -n [SIZE OF DATA] -g [ENABLE GRAPH]')
     print('''Algorithms:
             1. Bubble
             2. Quick
