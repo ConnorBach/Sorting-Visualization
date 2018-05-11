@@ -21,6 +21,8 @@ def usage(status):
             4. Selection
             5. Shell
             6. Default 
+            7. Merge In Place
+            8. Merge Recursive
             ''')
     sys.exit(status)
 
@@ -30,7 +32,9 @@ functdict =  {
     '3': sorting.insertion,
     '4': sorting.selection,
     '5': sorting.shell,
-    '6': sorting.default_sort
+    '6': sorting.default_sort,
+    '7': sorting.inMerge,
+    '8': sorting.merge
 }
 
 # Parse command line arguments

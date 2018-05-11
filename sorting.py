@@ -125,3 +125,78 @@ def default_sort(nums, sz, graph, plt, GRAPHICS):
         if GRAPHICS:
             graph.updateGraph(plt, nums, sz)
             plt.pause(0.001)
+
+'''
+FUNCTION merge
+recursive merge sort function
+@return number of swaps
+'''
+def merge(nums, sz, graph, plt, GRAPHICS):
+    swaps = 0
+    if sz > 1:
+        mid = sz // 2
+        left = nums[:mid]
+        right = nums[mid:]
+        
+        swaps += merge(left, len(left), graph, plt, GRAPHICS)
+        swaps += merge(right, len(right), graph, plt, GRAPHICS)
+        i = 0
+        j = 0
+        k = 0
+        while i < len(left) and j < len(right):
+            if left[i] < right[j]:
+                nums[k] = left[i]
+                i += 1
+            else:
+                nums[k] = right[j]
+                swaps += 1
+                j += 1
+                
+            k += 1
+            
+        while i < len(left):
+            nums[k] = left[i]
+            i += 1
+            k += 1
+            
+        while j < len(right):
+            nums[k] = right[j]
+            j += 1
+            k += 1
+        
+    if GRAPHICS:
+        graph.updateGraph(plt, nums, sz)
+        plt.pause(0.001)
+    
+    return swaps
+        
+'''
+FUNCTION inMerge
+in-place merge sort function
+@return number of swaps
+'''
+def inMerge(nums, sz, graph, plt, GRAPHICS):
+    unit = 1
+    swaps = 0
+    while unit <= sz:
+        h = 0
+        for h in range(0, sz, unit * 2):
+            l, r = h, min(sz, h + 2 * unit)
+            mid = h + unit
+            p, q = l, mid
+            while p < mid and q < r:
+                if nums[p] < nums[q]:
+                    p += 1
+                else:
+                    tmp = nums[q]
+                    nums[p + 1: q + 1] = nums[p:q]
+                    nums[p] = tmp
+                    p, mid, q = p + 1, mid + 1, q + 1
+                    swaps += 1
+        unit *= 2
+        if GRAPHICS:
+            graph.updateGraph(plt, nums, sz)
+            plt.pause(1)
+            
+    return swaps
+
