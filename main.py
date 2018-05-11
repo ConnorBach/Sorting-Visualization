@@ -72,10 +72,19 @@ if GRAPHICS:
     graph.graphData(plt, nums, sz)
     plt.show()
 
+# testing
+#print('Testing output...')
+checkNums = sorted(nums)
+
 #call sorting function
 start = time.time()
 swaps = functdict[choice](nums, sz, graph, plt, GRAPHICS)
 end = time.time()
+
+if(nums != checkNums):
+    print('Failed')
+#else:
+#    print('Correct')
 
 #Change color after plotting
 if GRAPHICS:

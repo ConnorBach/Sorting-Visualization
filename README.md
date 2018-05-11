@@ -1,9 +1,24 @@
 # Sorting-Visualization
 
-Program flow:
+Python project for visualizing sorting algorithms.
 
-main.py is the entry point. It allows user to select the sorting algorithm.
-sorting.py contains all sorting algorithms
-graph.py iteratively graphs the changing data.
+Dependencies: python3, matplotlib
 
+Installation: 
+    git clone https://github.com/ConnorBach/Sorting-Visualization
+    chmod +x main.py
+    ./main.py -h
+
+Usage:
+    main.py -a [ALGORITHM] -n [SIZE OF DATA] -g [ENABLE GRAPH]
+
+    Pass True to the -g flag for animation
+
+Benmarking:
+    chmod +x benchmark.py
+    ./benchmark.py 
+
+    Outputs table with swaps and time for each algorithm on 4 trials
+    10, 100, 1000, 10000 elements
+    
 Created by Connor Bach and Patrick Fischer
