@@ -73,7 +73,6 @@ if GRAPHICS:
     plt.show()
 
 # testing
-#print('Testing output...')
 checkNums = sorted(nums)
 
 #call sorting function
@@ -81,10 +80,12 @@ start = time.time()
 swaps = functdict[choice](nums, sz, graph, plt, GRAPHICS)
 end = time.time()
 
+f = open('check.txt', 'a')
 if(nums != checkNums):
-    print('Failed')
-#else:
-#    print('Correct')
+    f.write('Failed')
+else:
+    f.write('Correct')
+f.close()
 
 #Change color after plotting
 if GRAPHICS:
