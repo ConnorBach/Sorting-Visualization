@@ -87,7 +87,7 @@ if GRAPHICS:
 
 #show final graph
 print('Swaps: ', swaps)
-print('Time: ', "{0:.2f}".format((end-start)), end='')
+print('Time: ', "{0:.2f}".format((end-start)))
 
 if GRAPHICS:
     plt.show()
