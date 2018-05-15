@@ -20,5 +20,7 @@ Benmarking:
 
     Outputs table with swaps and time for each algorithm on 4 trials
     10, 100, 1000, 10000 elements
+
+![Sorting Visualization](sort.png)
     
 Created by Connor Bach and Patrick Fischer
