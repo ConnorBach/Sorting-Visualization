@@ -6,8 +6,6 @@ import time
 import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
-import pyqtgraph as pg
-import numpy as np
 import sys
 
 def usage(status):
@@ -49,7 +47,7 @@ def parse_arguments():
         if '-g' in sys.argv:
             enableGraph = True
     except:
-        usage(2)
+        usage(1)
 
     return algorithm, size, enableGraph
 
@@ -58,8 +56,7 @@ def is_sorted(data):
     return c == data
 
 if __name__ == "__main__":
-    algoDict = []
-    algoDict.append(sorting.insertion_sort)
+    algoDict = [sorting.insertion_sort]
 
     algorithm, size, enableGraph = parse_arguments()
     print(algorithm, size, enableGraph)
@@ -68,19 +65,20 @@ if __name__ == "__main__":
 
     if enableGraph:
         fig = plt.figure()
-        plt.ion()
-        graph.draw_barchart(plt,data)
-        time.sleep(1)
 
-    #call sorting function
-    start = time.time()
-    swaps = algoDict[algorithm](plt, data)
-    end = time.time()
+        start = time.time()
+        algoDict[algorithm](plt,data)
+        end = time.time()
 
     if not is_sorted(data):
         print('ERROR: Failure with Sorting Algorithm...')
+        sys.exit(1)
     else:
         print('SUCCESS')
+        plt.clf()
+        plt.bar(range(1,len(data)+1), data, align='center', alpha=1, color='green')
+        plt.draw()
+        plt.pause(5)
 
 
 '''

@@ -13,6 +13,6 @@ def insertion_sort(plt, nums, start=0, end=None):
             nums[j+1]=nums[j]
             j-=1
         nums[j+1] = x
-        graph.draw_barchart(plt, nums)
+        graph.draw_barchart(plt,nums)
 
     return swaps
