@@ -3,10 +3,14 @@ import graph
 import sorting
 import random
 import time
-import matplotlib
-import matplotlib.pyplot as plt
-import matplotlib.animation as animation
+#import matplotlib
+#import matplotlib.pyplot as plt
+#import matplotlib.animation as animation
 import sys
+from pyqtgraph.Qt import QtGui, QtCore
+import pyqtgraph as pg
+import pyqtgraph.examples
+pyqtgraph.examples.run()
 
 def usage(status):
     print('Sorting Visualization')
@@ -56,18 +60,30 @@ def is_sorted(data):
     return c == data
 
 if __name__ == "__main__":
-    algoDict = [sorting.insertion_sort]
+
+    algoDict = [sorting.insertion_sort,sorting.quicksort]
 
     algorithm, size, enableGraph = parse_arguments()
     print(algorithm, size, enableGraph)
 
     data = random.sample(range(1,size+1), size)
 
+    ### PG
+    win = pg.GraphicsWindow()
+    plt = win.addPlot()
+    curve = plt.plot(data)
+
+    gen = algoDict[algorithm](curve,data)
+    def rando():
+        try:
+            next(gen)
+        except StopIteration:
+            return None
+    ### END
     if enableGraph:
-        fig = plt.figure()
 
         start = time.time()
-        algoDict[algorithm](plt,data)
+        #algoDict[algorithm](curve,data)
         end = time.time()
 
     if not is_sorted(data):
@@ -75,12 +91,17 @@ if __name__ == "__main__":
         sys.exit(1)
     else:
         print('SUCCESS')
-        plt.clf()
+        '''plt.clf()
         plt.bar(range(1,len(data)+1), data, align='center', alpha=1, color='green')
         plt.draw()
-        plt.pause(5)
+        plt.pause(5)'''
 
+    timer = pg.QtCore.QTimer()
+    timer.timeout.connect(rando)
+    timer.start(50)
 
+    if (sys.flags.interactive != 1) or not hasattr(QtCore, 'PYQT_VERSION'):
+        pg.QtGui.QApplication.exec_()
 '''
 #Change color after plotting
 if GRAPHICS:
