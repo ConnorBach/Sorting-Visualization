@@ -12,6 +12,8 @@ def insertion_sort(curve,nums, start=0, end=None):
         while j >= start and nums[j] > x:
             nums[j+1]=nums[j]
             j-=1
+            curve.setData(nums)
+            yield
         nums[j+1] = x
 
         curve.setData(nums)
@@ -32,18 +34,18 @@ def quicksort(curve, nums, start=0, end=None):
     if end-start <= 10:
         yield from insertion_sort(curve,nums, start, end)
     else:
-        p = partition(nums, start, end)
-        yield from quicksort(curve, nums, start, p)
-        yield from quicksort(curve, nums, p+1, end)
-
-def partition(nums, start, end):
-    # Initialization
-    current = start
-    # Sorting by pivot
-    for i in range(start, end):
-        if nums[i] < nums[end-1]:
-            swap(nums, current, i)
-            current+=1
-    # Move pivot between sorted sections
-    swap(nums, current, end-1)
-    return current
+        # Partition
+        current = start
+        # Sorting by pivot
+        for i in range(start, end):
+            if nums[i] < nums[end-1]:
+                swap(nums, current, i)
+                current+=1
+                curve.setData(nums)
+                yield
+        # Move pivot between sorted sections
+        swap(nums, current, end-1)
+        curve.setData(nums)
+        yield
+        yield from quicksort(curve, nums, start, current)
+        yield from quicksort(curve, nums, current+1, end)

@@ -9,8 +9,8 @@ import time
 import sys
 from pyqtgraph.Qt import QtGui, QtCore
 import pyqtgraph as pg
-import pyqtgraph.examples
-pyqtgraph.examples.run()
+#import pyqtgraph.examples
+#pyqtgraph.examples.run()
 
 def usage(status):
     print('Sorting Visualization')
@@ -37,7 +37,7 @@ def usage(status):
     sys.exit(status)
 
 def parse_arguments():
-    algorithm = 2
+    algorithm = 0
     size = 100
     enableGraph = False
 
@@ -45,12 +45,16 @@ def parse_arguments():
         if '-h' in sys.argv:
             usage(0)
         if '-a' in sys.argv:
+            print(1)
             algorithm = int(sys.argv[sys.argv.index('-a')+1])
         if '-n' in sys.argv:
+            print(1)
             size = int(sys.argv[sys.argv.index('-n')+1])
         if '-g' in sys.argv:
+            print(1)
             enableGraph = True
-    except:
+    except Exception:
+        print(sys.argv)
         usage(1)
 
     return algorithm, size, enableGraph
@@ -98,7 +102,7 @@ if __name__ == "__main__":
 
     timer = pg.QtCore.QTimer()
     timer.timeout.connect(rando)
-    timer.start(50)
+    timer.start(10)
 
     if (sys.flags.interactive != 1) or not hasattr(QtCore, 'PYQT_VERSION'):
         pg.QtGui.QApplication.exec_()
