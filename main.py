@@ -5,88 +5,85 @@ import random
 import time
 import matplotlib
 import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+import pyqtgraph as pg
+import numpy as np
 import sys
-
-CHOICE = '1'
-SZ = 0
-GRAPHICS = False 
 
 def usage(status):
     print('Sorting Visualization')
-    print('USAGE: main.py -a [ALGORITHM] -n [SIZE OF DATA] -g [ENABLE GRAPH]')
-    print('''Algorithms:
-            1. Bubble
-            2. Quick
-            3. Insertion
-            4. Selection
-            5. Shell
-            6. Default 
-            7. Merge In Place
-            8. Merge Recursive
-            ''')
+    print()
+
+    print('''OPTIONS:
+    -a [algorithm]      Sorting algorithms available:
+                            1. Bubble
+                            2. Quick
+                            3. Insertion
+                            4. Selection
+                            5. Shell
+                            6. Default
+                            7. Merge In Place
+                            8. Merge Recursive
+
+    -n [size]           Size of data provided
+    -g                  Enables graphing component
+    -h                  Displays usage
+    ''')
+
+    if not status == 0:
+        print('ERROR: There was a problem with the given input...')
     sys.exit(status)
 
-functdict =  {
-    '1': sorting.bubble,
-    '2': sorting.quick,
-    '3': sorting.insertion,
-    '4': sorting.selection,
-    '5': sorting.shell,
-    '6': sorting.default_sort,
-    '7': sorting.inMerge,
-    '8': sorting.merge
-}
+def parse_arguments():
+    algorithm = 2
+    size = 100
+    enableGraph = False
 
-# Parse command line arguments
-i = 1
-if len(sys.argv) == 2:
-    if sys.argv[1] == '-h':
-        usage(0)
+    try:
+        if '-h' in sys.argv:
+            usage(0)
+        if '-a' in sys.argv:
+            algorithm = int(sys.argv[sys.argv.index('-a')+1])
+        if '-n' in sys.argv:
+            size = int(sys.argv[sys.argv.index('-n')+1])
+        if '-g' in sys.argv:
+            enableGraph = True
+    except:
+        usage(2)
 
-while i < len(sys.argv) - 1:
-    arg = sys.argv[i]
-    if arg == '-h':
-        usage(0)
-    elif arg == '-a':
-        i += 1
-        CHOICE = sys.argv[i]
-    elif arg == '-n':
-        i += 1
-        SZ = int(sys.argv[i])
-    elif arg == '-g':
-        i += 1
-        GRAPHICS = sys.argv[i]
+    return algorithm, size, enableGraph
+
+def is_sorted(data):
+    c = data.copy()
+    return c == data
+
+if __name__ == "__main__":
+    algoDict = []
+    algoDict.append(sorting.insertion_sort)
+
+    algorithm, size, enableGraph = parse_arguments()
+    print(algorithm, size, enableGraph)
+
+    data = random.sample(range(1,size+1), size)
+
+    if enableGraph:
+        fig = plt.figure()
+        plt.ion()
+        graph.draw_barchart(plt,data)
+        time.sleep(1)
+
+    #call sorting function
+    start = time.time()
+    swaps = algoDict[algorithm](plt, data)
+    end = time.time()
+
+    if not is_sorted(data):
+        print('ERROR: Failure with Sorting Algorithm...')
     else:
-        usage(1)
-    i += 1
+        print('SUCCESS')
 
-choice = CHOICE
-sz = SZ
-#set interactive
-if GRAPHICS:
-    plt.ion()
 
-#initial graph 
-nums = random.sample(range(1,sz+1), sz)
-if GRAPHICS:
-    graph.graphData(plt, nums, sz)
-    plt.show()
-
-# testing
-checkNums = sorted(nums)
-
-#call sorting function
-start = time.time()
-swaps = functdict[choice](nums, sz, graph, plt, GRAPHICS)
-end = time.time()
-
-f = open('check.txt', 'a')
-if(nums != checkNums):
-    f.write('Failed\n')
-else:
-    f.write('Correct\n')
-f.close()
-
+'''
 #Change color after plotting
 if GRAPHICS:
     ax = plt.gca()
@@ -102,3 +99,4 @@ print('Time: ', "{0:.2f}".format((end-start)))
 if GRAPHICS:
     plt.show()
     plt.pause(3)
+'''
