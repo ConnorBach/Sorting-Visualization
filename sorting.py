@@ -1,6 +1,3 @@
-import pyqtgraph as pg
-import sys
-
 def insertion_sort(g,nums, start=0, end=None):
 	# Default Parameter Correction
 	if end is None:

@@ -3,9 +3,6 @@ from graph import Grapher
 import sorting
 import random
 import time
-#import matplotlib
-#import matplotlib.pyplot as plt
-#import matplotlib.animation as animation
 import sys
 from pyqtgraph.Qt import QtGui, QtCore
 import pyqtgraph as pg
@@ -57,51 +54,26 @@ def parse_arguments():
 
 def is_sorted(data):
 	c = data.copy()
+	c.sort()
 	return c == data
 
 if __name__ == "__main__":
 
 	algoDict = [sorting.insertion_sort,sorting.quicksort]
-
 	algorithm, size, enableGraph = parse_arguments()
-
 	data = random.sample(range(1,size+1), size)
 
-	### PG
-	g = Grapher(data)
-	#win = pg.GraphicsWindow()
-	#plt = win.addPlot()
-	#curve = plt.plot(data)
-	#bg = pg.BarGraphItem(x=range(1,len(data)+1),height=data,width=0.6)
-	#plt.addItem(bg)
+	g = Grapher(data, enableGraph)
 
-	#gen =
+	if (sys.flags.interactive != 1) or not hasattr(QtCore, 'PYQT_VERSION'):
+		start = time.time()
+		algoDict[algorithm](g,data)
+		end = time.time()
 
-	if not is_sorted(data):
-		print('ERROR: Failure with Sorting Algorithm...')
-		sys.exit(1)
-	else:
-		print('SUCCESS')
-		'''plt.clf()
-		plt.bar(range(1,len(data)+1), data, align='center', alpha=1, color='green')
-		plt.draw()
-		plt.pause(5)'''
-
-	#timer = pg.QtCore.QTimer()
-	#timer.timeout.connect(update)
-	#timer.start(0)
-
-	if enableGraph:
-		if (sys.flags.interactive != 1) or not hasattr(QtCore, 'PYQT_VERSION'):
-			start = time.time()
-			algoDict[algorithm](g,data)
-			#algoDict[algorithm](g,data)
-
-
-			#update()
-			#update()
-			#update()
-			end = time.time()
+		if not is_sorted(data):
+			print('ERROR: Failure with Sorting Algorithm...')
+			sys.exit(1)
+		else:
 			print('RUNTIME: '+'{:.2f}'.format(end-start)+' sec')
 
 
