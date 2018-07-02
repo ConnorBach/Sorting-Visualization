@@ -20,7 +20,7 @@ OPTIONS:
 			2. Quick
 			3. Merge Recursive
 			4. Selection
-			5. Bubble (NOT COMPLETE)
+			5. Bubble
 			6. Shell (NOT COMPLETE)
 			7. Default (NOT COMPLETE)
 			8. Merge In Place (NOT COMPLETE)
