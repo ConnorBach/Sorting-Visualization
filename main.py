@@ -64,7 +64,8 @@ def is_sorted(data, start=0, end=None):
 
 if __name__ == "__main__":
 
-	algoDict = [sorting.quicksort,sorting.insertion_sort,sorting.quicksort,sorting.merge_sort,sorting.selection_sort]
+	algoDict = [sorting.quicksort, sorting.insertion_sort, sorting.quicksort, \
+				sorting.merge_sort, sorting.selection_sort, sorting.bubble_sort]
 	algorithm, size, enableGraph = parse_arguments()
 	data = random.sample(range(1,size+1), size)
 	#data = [random.lognormvariate(0,1) for i in range(size)]
@@ -75,10 +76,10 @@ if __name__ == "__main__":
 
 	if (sys.flags.interactive != 1) or not hasattr(QtCore, 'PYQT_VERSION'):
 		startTime = time.time()
-		algoDict[algorithm](g,data,0,size)
+		algoDict[algorithm](g,data,size//4,size//2)
 		endTime = time.time()
 
-		if not is_sorted(data,0,size):
+		if not is_sorted(data,size//4,size//2):
 			print('ERROR: Failure with Sorting Algorithm...')
 			sys.exit(1)
 		else:

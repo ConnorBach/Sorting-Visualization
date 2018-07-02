@@ -97,3 +97,13 @@ def selection_sort(g, nums, start=0, end=None):
 			if nums[j] < nums[minIndex]:
 				minIndex = j
 		swap(g, nums,i,minIndex)
+
+def bubble_sort(g, nums, start=0, end=None):
+	# Default Parameter Correction
+	if end is None:
+		end = len(nums)
+
+	for i in range(end-1,start,-1):
+		for j in range(start,i):
+			if nums[j] > nums[j+1]:
+				swap(g, nums, j, j+1)
