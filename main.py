@@ -10,19 +10,21 @@ import pyqtgraph as pg
 #pyqtgraph.examples.run()
 
 def usage(status):
-	print('Sorting Visualization')
+	print('SORTING VISUALIZATION')
 	print()
 
 	print('''OPTIONS:
 	-a [algorithm]      Sorting algorithms available:
-							1. Bubble
-							2. Quick
-							3. Insertion
-							4. Selection
-							5. Shell
-							6. Default
-							7. Merge In Place
-							8. Merge Recursive
+				0. Default
+				1. Insertion
+				2. Quick
+				3. Bubble (NOT COMPLETE)
+				4. Selection (NOT COMPLETE)
+				5. Shell (NOT COMPLETE)
+				6. Default (NOT COMPLETE)
+				7. Merge In Place (NOT COMPLETE)
+				8. Merge Recursive (NOT COMPLETE)
+				9. Heap Sort (NOT COMPLETE)
 
 	-n [size]           Size of data provided
 	-g                  Enables graphing component
@@ -35,7 +37,7 @@ def usage(status):
 
 def parse_arguments():
 	algorithm = 0
-	size = 100
+	size = 500
 	enableGraph = False
 
 	try:
@@ -52,29 +54,35 @@ def parse_arguments():
 
 	return algorithm, size, enableGraph
 
-def is_sorted(data):
+def is_sorted(data, start=0, end=None):
+	if end is None:
+		end = len(data)
+
 	c = data.copy()
-	c.sort()
+	c[start:end] = sorted(c[start:end])
 	return c == data
 
 if __name__ == "__main__":
 
-	algoDict = [sorting.insertion_sort,sorting.quicksort]
+	algoDict = [sorting.quicksort,sorting.insertion_sort,sorting.quicksort,sorting.merge_sort]
 	algorithm, size, enableGraph = parse_arguments()
 	data = random.sample(range(1,size+1), size)
+	#data = [random.lognormvariate(0,1) for i in range(size)]
+	#data = [random.paretovariate(1) for i in range(size)]
+	#data = [random.vonmisesvariate(0.75,2) for i in range(size)]
 
 	g = Grapher(data, enableGraph)
 
 	if (sys.flags.interactive != 1) or not hasattr(QtCore, 'PYQT_VERSION'):
-		start = time.time()
-		algoDict[algorithm](g,data)
-		end = time.time()
+		startTime = time.time()
+		algoDict[algorithm](g,data,0,size)
+		endTime = time.time()
 
-		if not is_sorted(data):
+		if not is_sorted(data,0,size):
 			print('ERROR: Failure with Sorting Algorithm...')
 			sys.exit(1)
 		else:
-			print('RUNTIME: '+'{:.2f}'.format(end-start)+' sec')
+			print('RUNTIME: '+'{:.2f}'.format(endTime-startTime)+' sec')
 
 
 

@@ -12,7 +12,7 @@ class Grapher:
 		pg.QtGui.QApplication.quit()
 
 	def update(self, data):
-		if (self.enableGraph):
+		if self.enableGraph:
 			if (self.win.isVisible()):
 				self.curve.setData(data)
 				pg.QtGui.QApplication.processEvents()
