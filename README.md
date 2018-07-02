@@ -7,10 +7,13 @@ Dependencies: python3, pyqtgraph
 Installation:
 	git clone https://github.com/ConnorBach/Sorting-Visualization
 
-	chmod +x main.py
-	./main.py -h
+```bash
+chmod +x main.py
+./main.py -h
+```
 
 OPTIONS:
+
 	-a [algorithm]      Sorting algorithms available:
 			0. Default
 			1. Insertion
@@ -29,12 +32,16 @@ OPTIONS:
 
 EXAMPLE USAGE:
 
-	./main.py -a 2 -n 1000 -g
+```bash
+./main.py -a 2 -n 1000 -g
+```
 
 Benmarking:
 
-    chmod +x benchmark.py
-    ./benchmark.py
+```bash
+chmod +x benchmark.py
+./benchmark.py
+```
 
 Outputs table with swaps and time for each algorithm on 4 trials
 10, 100, 1000, 10000 elements
