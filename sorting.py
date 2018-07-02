@@ -85,3 +85,15 @@ def merge_sort(g, nums, start=0, end=None):
 		merge_sort(g, nums, start, (start+end)//2)
 		merge_sort(g, nums, (start+end)//2, end)
 		merge(g, nums, start, (start+end)//2, end)
+
+def selection_sort(g, nums, start=0, end=None):
+	# Default Parameter Correction
+	if end is None:
+		end = len(nums)
+	# Sort
+	for i in range(start,end-1):
+		minIndex = -1
+		for j in range(i,end):
+			if nums[j] < nums[minIndex]:
+				minIndex = j
+		swap(g, nums,i,minIndex)

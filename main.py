@@ -18,12 +18,12 @@ def usage(status):
 				0. Default
 				1. Insertion
 				2. Quick
-				3. Bubble (NOT COMPLETE)
-				4. Selection (NOT COMPLETE)
-				5. Shell (NOT COMPLETE)
-				6. Default (NOT COMPLETE)
-				7. Merge In Place (NOT COMPLETE)
-				8. Merge Recursive (NOT COMPLETE)
+				3. Merge Recursive
+				4. Selection
+				5. Bubble (NOT COMPLETE)
+				6. Shell (NOT COMPLETE)
+				7. Default (NOT COMPLETE)
+				8. Merge In Place (NOT COMPLETE)
 				9. Heap Sort (NOT COMPLETE)
 
 	-n [size]           Size of data provided
@@ -64,7 +64,7 @@ def is_sorted(data, start=0, end=None):
 
 if __name__ == "__main__":
 
-	algoDict = [sorting.quicksort,sorting.insertion_sort,sorting.quicksort,sorting.merge_sort]
+	algoDict = [sorting.quicksort,sorting.insertion_sort,sorting.quicksort,sorting.merge_sort,sorting.selection_sort]
 	algorithm, size, enableGraph = parse_arguments()
 	data = random.sample(range(1,size+1), size)
 	#data = [random.lognormvariate(0,1) for i in range(size)]
