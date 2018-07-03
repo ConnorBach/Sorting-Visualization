@@ -1,202 +1,156 @@
-#contains all sorting algorithms
+## Future Edits: default parameters for all functions
+## Clean up heapsort main body
 
-'''
-FUNCTION bubble
-@param nums - list of numbers to sort
-@param sz - size of list
-@param graph - module for graphing
-@param plt - matplotlib plt
-@return number of swaps
-'''
-def bubble(nums, sz, graph, plt, GRAPHICS):
-    swaps = 0
-    for i in range(len(nums)-1, 0, -1):
-        for j in range(i):
-            if(nums[j] > nums[j+1]):
-                #swap element
-                tmp = nums[j]
-                nums[j] = nums[j+1]
-                nums[j+1] = tmp
-                swaps += 1
-            #update graph
-            if GRAPHICS:
-                graph.updateGraph(plt, nums, sz)
-                plt.pause(0.001)
-    return swaps
-#TODO: Add more sorting algorithms
+def insertion_sort(g, nums, start=0, end=None):
+	# Default Parameter Correction
+	if end is None:
+		end = len(nums)
+	# Sort
+	for i in range(start+1,end):
+		x = nums[i]
+		j = i-1
+		while j >= start and nums[j] > x:
+			nums[j+1]=nums[j]
+			j-=1
+			g.update(nums)
+		nums[j+1] = x
 
-'''
-FUNCTION partion
-Quick sort helper function
-'''
-def partition(nums, begin, end):
-    pvt = begin
-    swaps = 0
-    for i in range(begin+1 , end+1):
-        if(nums[i] <= nums[begin]):
-            pvt += 1
-            nums[i], nums[pvt] = nums[pvt], nums[i]
-            swaps += 1
-    nums[pvt], nums[begin] = nums[begin], nums[pvt]
-    swaps += 1
-    return [pvt, swaps]
+		g.update(nums)
 
-'''
-FUNCTION quick
-quick sort function
-@return number of swaps
-'''
-def quick(nums, sz, graph, plt, GRAPHICS):
-    begin = 0
-    end = (sz-1)
-    swaps = 0
+	g.exit()
 
-    def _quicksort(nums, begin, end, swaps, GRAPHICS):
-        if begin >= end:
-            return swaps 
-        val = partition(nums, begin, end)
-        pvt = val[0]
-        swaps = val[1]
-        if GRAPHICS:
-            graph.updateGraph(plt, nums, sz)
-            plt.pause(0.001)
-        swaps += _quicksort(nums, begin, pvt-1, swaps, GRAPHICS)
-        swaps += _quicksort(nums, pvt+1, end, swaps, GRAPHICS)
-        return swaps
+def swap(g, nums, index1, index2):
+	nums[index1], nums[index2] = nums[index2], nums[index1]
+	g.update(nums)
 
-    swaps = _quicksort(nums, begin, end, swaps, GRAPHICS)
-    return swaps
+def quicksort(g, nums, start=0, end=None):
+	# Default Parameter Correction
+	if end is None:
+		end = len(nums)
+	# Smaller Sorts --> insertion_sort
+	# Larger Sorts --> quicksort
+	# Without using insertion, would need an if making sure length > 1
+	if end-start <= 10:
+		insertion_sort(g, nums, start, end)
+	else:
+		p = partition(g, nums, start, end)
+		quicksort(g, nums, start, p)
+		quicksort(g, nums, p+1, end)
 
-def insertion(nums, sz, graph, plt, GRAPHICS):
-    swaps = 0
-    for i in range(1, sz):
-        val = nums[i]
-        pos = i
-        while pos > 0 and nums[pos-1] > val:
-            nums[pos] = nums[pos-1]
-            pos -= 1
-            swaps += 1
-            if GRAPHICS:
-                graph.updateGraph(plt, nums, sz)
-                plt.pause(0.001)
-        nums[pos] = val
-    return swaps
+	g.exit()
 
-def selection(nums, sz, graph, plt, GRAPHICS):
-    swaps = 0
-    for i in range(sz):
-        minElementIndex = i
-        for j in range(i+1, sz):
-            if(nums[j] < nums[minElementIndex]):
-                minElementIndex = j
-        if(minElementIndex != i):
-            tmp = nums[i]
-            nums[i] = nums[minElementIndex]
-            nums[minElementIndex] = tmp
-            swaps += 1
-            if GRAPHICS:
-                graph.updateGraph(plt, nums, sz)
-                plt.pause(0.001)
-    return swaps
+def partition(g, nums, start, end):
+	# Initialization
+	current = start
+	# Sorting by pivot
+	for i in range(start, end):
+		if nums[i] < nums[end-1]:
+			swap(g, nums, current, i)
+			current+=1
+	# Move pivot between sorted sections
+	swap(g, nums, current, end-1)
+	return current
 
-def shell(nums, sz, graph, plt, GRAPHICS):
-    swaps = 0
-    # generate gaps of N/2^k
-    gaps = [int(sz/ pow(2,k)) for k in range(sz)]
-    for gap in gaps:
-        for i in range(gap, sz):
-            temp = nums[i]
+def merge(g, nums, start, middle, end):
+	# Initialization
+	copy = []
+	i1 = start
+	i2 = middle
+	# Merging 2 sorted lists
+	while i1 < middle and i2 < end:
+		if nums[i1] <= nums[i2]:
+			copy.append(nums[i1])
+			i1+=1
+		else:
+			copy.append(nums[i2])
+			i2+=1
+	# Leftover appending
+	for i in range(i1, middle):
+		copy.append(nums[i])
+	for i in range(i2, end):
+		copy.append(nums[i])
+	# Move from copy to nums
+	for i in range(start,end):
+		nums[i]=copy[i-start]
+		g.update(nums)
 
-            j = i
-            while j >= gap and nums[j-gap] > temp:
-                nums[j] = nums[j-gap]
-                swaps += 1
-                if GRAPHICS:
-                    graph.updateGraph(plt, nums, sz)
-                    plt.pause(0.001)
-                j -= gap
-            nums[j] = temp
-            swaps += 1
-    return swaps
 
-def default_sort(nums, sz, graph, plt, GRAPHICS):   
-    for i, e in enumerate(sorted(nums)):
-        nums[i] = e 
-        if GRAPHICS:
-            graph.updateGraph(plt, nums, sz)
-            plt.pause(0.001)
+def merge_sort(g, nums, start=0, end=None):
+	# Default Parameter Correction
+	if end is None:
+		end = len(nums)
+	# Smaller Sorts --> insertion_sort
+	# Larger Sorts --> merge_sort
+	# Without using insertion, could go all the way to base
+	if end-start <= 10:
+		insertion_sort(g, nums, start, end)
+	else:
+		merge_sort(g, nums, start, (start+end)//2)
+		merge_sort(g, nums, (start+end)//2, end)
+		merge(g, nums, start, (start+end)//2, end)
 
-'''
-FUNCTION merge
-recursive merge sort function
-@return number of swaps
-'''
-def merge(nums, sz, graph, plt, GRAPHICS):
-    swaps = 0
-    if sz > 1:
-        mid = sz // 2
-        left = nums[:mid]
-        right = nums[mid:]
-        
-        swaps += merge(left, len(left), graph, plt, GRAPHICS)
-        swaps += merge(right, len(right), graph, plt, GRAPHICS)
-        i = 0
-        j = 0
-        k = 0
-        while i < len(left) and j < len(right):
-            if left[i] < right[j]:
-                nums[k] = left[i]
-                i += 1
-            else:
-                nums[k] = right[j]
-                swaps += 1
-                j += 1
-                
-            k += 1
-            
-        while i < len(left):
-            nums[k] = left[i]
-            i += 1
-            k += 1
-            
-        while j < len(right):
-            nums[k] = right[j]
-            j += 1
-            k += 1
-        
-    if GRAPHICS:
-        graph.updateGraph(plt, nums, sz)
-        plt.pause(0.001)
-    
-    return swaps
-        
-'''
-FUNCTION inMerge
-in-place merge sort function
-@return number of swaps
-'''
-def inMerge(nums, sz, graph, plt, GRAPHICS):
-    unit = 1
-    swaps = 0
-    while unit <= sz:
-        h = 0
-        for h in range(0, sz, unit * 2):
-            l, r = h, min(sz, h + 2 * unit)
-            mid = h + unit
-            p, q = l, mid
-            while p < mid and q < r:
-                if nums[p] < nums[q]:
-                    p += 1
-                else:
-                    tmp = nums[q]
-                    nums[p + 1: q + 1] = nums[p:q]
-                    nums[p] = tmp
-                    p, mid, q = p + 1, mid + 1, q + 1
-                    swaps += 1
-        unit *= 2
-        if GRAPHICS:
-            graph.updateGraph(plt, nums, sz)
-            plt.pause(1)
-            
-    return swaps
+def selection_sort(g, nums, start=0, end=None):
+	# Default Parameter Correction
+	if end is None:
+		end = len(nums)
+	# Sort
+	for i in range(start,end-1):
+		minIndex = -1
+		for j in range(i,end):
+			if nums[j] < nums[minIndex]:
+				minIndex = j
+		swap(g, nums,i,minIndex)
 
+def bubble_sort(g, nums, start=0, end=None):
+	# Default Parameter Correction
+	if end is None:
+		end = len(nums)
+
+	for i in range(end-1,start,-1):
+		for j in range(start,i):
+			if nums[j] > nums[j+1]:
+				swap(g, nums, j, j+1)
+
+def heap_get_left(i, start=0):
+	return 2*i+1-start
+
+def heap_get_right(i, start=0):
+	return 2*i+2-start
+
+def heap_get_parent(i, start=0):
+	return (i-1+start)//2
+
+def max_heapify(g, nums, i, start=0, end=None):
+	# Default Parameter Correction
+	if end is None:
+		end = len(nums)
+
+	left = heap_get_left(i, start)
+	right = heap_get_right(i, start)
+	max = i
+	if left < end and nums[left] > nums[max]:
+		max = left
+	if right < end and nums[right] > nums[max]:
+		max = right
+	if max != i:
+		swap(g, nums, i, max)
+		max_heapify(g, nums, max, start, end)
+
+def build_max_heap(g, nums, start=0, end=None):
+	# Default Parameter Correction
+	if end is None:
+		end = len(nums)
+
+	for i in range((end+start-2)//2, start-1, -1):
+		max_heapify(g, nums, i, start, end)
+
+def heapsort(g, nums, start=0, end=None):
+	# Default Parameter Correction
+	if end is None:
+		end = len(nums)
+	# Sort
+	build_max_heap(g, nums, start, end)
+	for i in range(end-1, start, -1):
+		swap(g, nums, start, i)
+		end-=1
+		max_heapify(g, nums, start, start, end)

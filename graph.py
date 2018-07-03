@@ -1,16 +1,20 @@
-#!/usr/bin/local/python3
-import random
+#from pyqtgraph.Qt import QtGui, QtCore
+import pyqtgraph as pg
 
-# input: list of numbers
-# output: matplotlib plot of the numbers 
-def graphData(plt, data, sz):
-    x_rng = [x for x in range(1,sz+1)]
-    plt.bar(x_rng, data, align='center', alpha=0.5)
-    plt.draw()
+class Grapher:
+	def __init__(self, data, enableGraph):
+		self.win = pg.GraphicsWindow()
+		self.plt = self.win.addPlot()
+		self.curve = self.plt.plot(data)
+		self.enableGraph = enableGraph
 
-def updateGraph(plt, data, sz):
-    #print('updating graph')
-    plt.clf()
-    x_rng = [x for x in range(1,sz+1)]
-    plt.bar(x_rng, data, align='center', alpha=0.5)
-    plt.draw()
+	def exit(self):
+		pg.QtGui.QApplication.quit()
+
+	def update(self, data):
+		if self.enableGraph:
+			if (self.win.isVisible()):
+				self.curve.setData(data)
+				pg.QtGui.QApplication.processEvents()
+			else:
+				self.exit()
