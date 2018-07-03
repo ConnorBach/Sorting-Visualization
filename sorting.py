@@ -149,9 +149,8 @@ def heapsort(g, nums, start=0, end=None):
 	if end is None:
 		end = len(nums)
 	# Sort
-	endCopy = end
-	build_max_heap(g, nums, start, endCopy)
-	for i in range(endCopy-1, start, -1):
+	build_max_heap(g, nums, start, end)
+	for i in range(end-1, start, -1):
 		swap(g, nums, start, i)
-		endCopy-=1
-		max_heapify(g, nums, start, start, endCopy)
+		end-=1
+		max_heapify(g, nums, start, start, end)
