@@ -21,10 +21,9 @@ def usage(status):
 				3. Merge Recursive
 				4. Selection
 				5. Bubble
-				6. Shell (NOT COMPLETE)
-				7. Default (NOT COMPLETE)
+				6. Heap
+				7. Shell (NOT COMPLETE)
 				8. Merge In Place (NOT COMPLETE)
-				9. Heap Sort (NOT COMPLETE)
 
 	-n [size]           Size of data provided
 	-g                  Enables graphing component
@@ -65,7 +64,8 @@ def is_sorted(data, start=0, end=None):
 if __name__ == "__main__":
 
 	algoDict = [sorting.quicksort, sorting.insertion_sort, sorting.quicksort, \
-				sorting.merge_sort, sorting.selection_sort, sorting.bubble_sort]
+				sorting.merge_sort, sorting.selection_sort, sorting.bubble_sort, \
+				sorting.heapsort]
 	algorithm, size, enableGraph = parse_arguments()
 	data = random.sample(range(1,size+1), size)
 	#data = [random.lognormvariate(0,1) for i in range(size)]

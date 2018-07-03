@@ -1,3 +1,6 @@
+## Future Edits: default parameters for all functions
+## Clean up heapsort main body
+
 def insertion_sort(g, nums, start=0, end=None):
 	# Default Parameter Correction
 	if end is None:
@@ -107,3 +110,48 @@ def bubble_sort(g, nums, start=0, end=None):
 		for j in range(start,i):
 			if nums[j] > nums[j+1]:
 				swap(g, nums, j, j+1)
+
+def heap_get_left(i, start=0):
+	return 2*i+1-start
+
+def heap_get_right(i, start=0):
+	return 2*i+2-start
+
+def heap_get_parent(i, start=0):
+	return (i-1+start)//2
+
+def max_heapify(g, nums, i, start=0, end=None):
+	# Default Parameter Correction
+	if end is None:
+		end = len(nums)
+
+	left = heap_get_left(i, start)
+	right = heap_get_right(i, start)
+	max = i
+	if left < end and nums[left] > nums[max]:
+		max = left
+	if right < end and nums[right] > nums[max]:
+		max = right
+	if max != i:
+		swap(g, nums, i, max)
+		max_heapify(g, nums, max, start, end)
+
+def build_max_heap(g, nums, start=0, end=None):
+	# Default Parameter Correction
+	if end is None:
+		end = len(nums)
+
+	for i in range((end+start-2)//2, start-1, -1):
+		max_heapify(g, nums, i, start, end)
+
+def heapsort(g, nums, start=0, end=None):
+	# Default Parameter Correction
+	if end is None:
+		end = len(nums)
+	# Sort
+	endCopy = end
+	build_max_heap(g, nums, start, endCopy)
+	for i in range(endCopy-1, start, -1):
+		swap(g, nums, start, i)
+		endCopy-=1
+		max_heapify(g, nums, start, start, endCopy)

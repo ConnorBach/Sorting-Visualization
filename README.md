@@ -21,10 +21,9 @@ OPTIONS:
 			3. Merge Recursive
 			4. Selection
 			5. Bubble
-			6. Shell (NOT COMPLETE)
-			7. Default (NOT COMPLETE)
+			6. Heap
+			7. Shell (NOT COMPLETE)
 			8. Merge In Place (NOT COMPLETE)
-			9. Heap Sort (NOT COMPLETE)
 
 	-n [size]           Size of data provided
 	-g                  Enables graphing component
